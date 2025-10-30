@@ -1,0 +1,42 @@
+# Configuration GitPod pour La Bonne Alternance
+
+image: gitpod/workspace-flutter
+
+tasks:
+  - name: Setup
+    init: |
+      echo "📦 Installation des dépendances..."
+      flutter pub get
+      echo "🔨 Génération du code..."
+      flutter pub run build_runner build --delete-conflicting-outputs
+      echo "✅ Setup terminé"
+    command: |
+      echo "🚀 Prêt à lancer l'app !"
+      echo ""
+      echo "Commandes disponibles :"
+      echo "  flutter run -d web-server --web-port 8080  # Lancer en web"
+      echo "  flutter run -d chrome                       # Lancer sur Chrome"
+      echo "  flutter test                                # Lancer les tests"
+      echo ""
+      gp sync-done setup
+
+  - name: Info
+    command: |
+      gp sync-await setup
+      echo ""
+      echo "📱 La Bonne Alternance - Application Flutter"
+      echo ""
+      echo "Pour lancer l'app en mode web :"
+      echo "  flutter run -d web-server --web-port 8080 --web-hostname 0.0.0.0"
+      echo ""
+      echo "L'URL sera automatiquement ouverte dans GitPod"
+
+ports:
+  - port: 8080
+    onOpen: open-preview
+    visibility: public
+
+vscode:
+  extensions:
+    - Dart-Code.dart-code
+    - Dart-Code.flutter
